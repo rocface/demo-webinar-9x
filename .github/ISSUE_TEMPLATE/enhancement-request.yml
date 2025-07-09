@@ -1,0 +1,68 @@
+name: ∞aC Enhancement Request
+description: Request improvements to the ∞aC system
+title: "[ENHANCEMENT] "
+labels: ["enhancement", "infinity-ac"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ∞aC Enhancement Request
+        Help us improve the Absolutely Everything as Code system.
+        
+        **⚠️ AI Safety Reminder**: Do not assume financial data, timelines, or technical specifications. Use placeholders for missing information.
+  
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: ∞aC Pillar
+      description: Which pillar does this enhancement relate to?
+      options:
+        - Knowledge as Code
+        - Processes as Code
+        - Relationships as Code
+        - Intelligence as Code
+        - All Pillars
+    validations:
+      required: true
+  
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: What is the current behavior/situation?
+      placeholder: "Describe the current state without assumptions..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: desired-state
+    attributes:
+      label: Desired Enhancement
+      description: What improvement do you want to see?
+      placeholder: "Describe the desired improvement..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business Value
+      description: What value would this enhancement provide?
+      placeholder: "Describe the business value without financial assumptions..."
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: safety-compliance
+    attributes:
+      label: Safety Compliance
+      description: Confirm AI safety guidelines followed
+      options:
+        - label: "No financial assumptions made"
+          required: true
+        - label: "No timeline assumptions made"
+          required: true
+        - label: "No technical assumptions made"
+          required: true
+        - label: "Placeholders used for missing information"
+          required: true
