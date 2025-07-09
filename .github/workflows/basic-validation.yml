@@ -1,0 +1,52 @@
+name: Basic ∞aC Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Validate Metadata
+      run: |
+        echo "Checking YAML frontmatter..."
+        find . -name "*.md" -exec grep -l "^---" {} \; | while read file; do
+          if head -20 "$file" | grep -q "title:"; then
+            echo "✅ $file has metadata"
+          else
+            echo "⚠️ $file missing metadata"
+          fi
+        done
+    
+    - name: Check AI Safety Compliance
+      run: |
+        echo "Checking AI safety guidelines..."
+        if find . -name "*.md" -exec grep -l "NEVER assume" {} \; | wc -l | grep -q "0"; then
+          echo "⚠️ AI safety guidelines may be missing"
+        else
+          echo "✅ AI safety guidelines found"
+        fi
+    
+    - name: Validate Cross-References
+      run: |
+        echo "Checking internal links..."
+        find . -name "*.md" -exec grep -o "\[.*\](.*\.md)" {} \; | while read link; do
+          file=$(echo "$link" | sed 's/.*](\(.*\))/\1/')
+          if [ -f "$file" ]; then
+            echo "✅ $link"
+          else
+            echo "⚠️ Broken link: $link"
+          fi
+        done
+    
+    - name: Content Quality Check
+      run: |
+        echo "Basic content quality validation..."
+        find . -name "*.md" -exec wc -w {} \; | awk '{if($1<50) print "⚠️ Short content: " $2}'
+        echo "✅ Content quality check complete"
